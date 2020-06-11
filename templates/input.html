@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+
+
+
+{% block content %}
+<h3><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search </h3>
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+    {{ form.title_select.label }} 
+    {{ form.title_select(class="form-control")}}
+    </div>
+    <div class="form-group">
+    {{ form.title.label }} 
+    {{ form.title(class="form-control")}}
+    </div>
+    <div class="form-group">
+    {{ form.description.label }} 
+    {{ form.description(class="form-control", rows="6")}}
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+
+
+{% endblock %}
+
+
+

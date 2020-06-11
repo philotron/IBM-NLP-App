@@ -1,0 +1,92 @@
+{% extends "template.html" %}
+
+
+
+{% block content %}
+<h3><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Skills </h3>
+{% if session.get('skill_rank') is not none %}
+<div class="cloudtag">
+    <div id="tagcloud">
+    {% for i in session.get('skill_rank') %}
+          <a href="#" rel="{{ i[1] }}" class="badge badge-info" onclick="jsfunc('{{ i[0] }}');">{{ i[0] }} ({{ i[1] }})</a>
+          {% endfor %}
+    </div>
+{% endif %}
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+         <div class="autotag">
+    {{ form.autotag.label }} 
+    {{ form.autotag(class="form-control", rows="6")}}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+{{ super() }}
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tagcloud.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tagsinput.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/typeahead.bundle.js') }}"></script>
+
+
+<script>
+var choices = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+      url: '{{ url_for("bloohdhoundRemote") }}',
+      'cache': false,
+      filter: function(list) {
+        console.log("Options:", list.options)
+        return $.map(list.options, function(option) {
+          return { name: option };
+        });
+      }
+    }
+});
+
+choices.initialize();
+
+$('div.autotag input').tagsinput({
+  typeaheadjs: {
+    limit: 10,
+    name: 'choices',
+    displayKey: 'name',
+    valueKey: 'name',
+    source: choices.ttAdapter()
+  }
+});
+</script>
+
+
+
+<script>
+$("#tagcloud a").tagcloud({
+	size: {start: 15, end: 25, unit: "px"},
+	color: {start: '#3498DB', end: '#46CFB0'}
+});
+</script>
+
+<script type="text/javascript">
+function jsfunc(variable) {
+    $('#tag').tagsinput('add', variable);
+}
+</script>
+
+
+{% endblock %}
