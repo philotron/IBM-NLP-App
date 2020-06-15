@@ -13,8 +13,7 @@ This web application is the project result of an internship at IBM. The objectiv
 ## Basic functionality
 1) First, the user is asked to input a SOW which includes a job title, a job description, or both. The text input is then preprocessed in accordance with conventional NLP practices.
 
-<img src="screenshots/screen2.PNG" width="1000"/>
+
 
 2) In the second step, the user is asked to input a SOW which includes a job title, a job description, or both. The text input is then preprocessed in accordance with conventional NLP practices.
 
-<img src="screenshots/screen3.PNG" width="1000"/>
